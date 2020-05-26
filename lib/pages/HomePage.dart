@@ -7,13 +7,16 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-//Variables
-Map data = {};
+
 
 class _HomeState extends State<HomePage> {
+
+  //Variables
+  Map data = {};
+
   @override
   Widget build(BuildContext context) {
-    data = ModalRoute.of(context).settings.arguments;
+    data = data.isNotEmpty ? data : ModalRoute.of(context).settings.arguments;
     print(data.toString());
     String bgImage = data[isDAYTIME] ? 'day.png' : 'night.png';
     Color bgColor = data[isDAYTIME] ? Colors.blue : Colors.indigo[700];
@@ -40,8 +43,18 @@ class _HomeState extends State<HomePage> {
               //SizedBox(height: 10),
               Center(
                 child: FlatButton.icon(
-                    onPressed: () {
-                      Navigator.pushNamed(context, LOCATION);
+                    onPressed: () async {
+                      dynamic result =
+                          await Navigator.pushNamed(context, LOCATION);
+                      setState(() {
+                        data = {
+                          LOCATION: result.location,
+                          TIME: result.time,
+                          FLAG: result.flag,
+                          isDAYTIME: result.isDayTime,
+                        };
+                        print('setState $data');
+                      });
                     },
                     icon: Icon(Icons.edit_location),
                     color: Colors.red,
