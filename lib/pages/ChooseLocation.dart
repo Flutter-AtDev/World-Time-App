@@ -8,20 +8,26 @@ class ChooseLocation extends StatefulWidget {
   _ChooseLocationState createState() => _ChooseLocationState();
 }
 
-
 class _ChooseLocationState extends State<ChooseLocation> {
-
-  void goToLocation(int index) async {
-    WorldTime location = locations[index];
-    await location.getTime();
-    print('mylocation:: ${location.time}');
+  void goToLocation(index) async {
+    WorldTime instance = locations[index];
+    await instance.getTime();
+    //print('mylocationI:: ${locations[index].toString()}');
+   // print('mylocationI:: ${instance.location}  ${instance.time}');
     //Navigate to Home Screen //pop = back to last Route
     Navigator.pop(context, {
-      LOCATION: location.location,
-      TIME: location.time,
-      FLAG: location.flag,
-      isDAYTIME: location.isDayTime,
+      LOCATION: instance.location,
+      TIME: instance.time,
+      FLAG: instance.flag,
+      isDAYTIME: instance.isDayTime,
     });
+  }
+
+  void printLocations() async {
+    for (int i = 0; i < locations.length; i++){
+      await locations[i].getTime();
+      print('$i ${locations[i].location}  ${locations[i].time}');
+    }
   }
 
   int counter = 0;
@@ -35,7 +41,6 @@ class _ChooseLocationState extends State<ChooseLocation> {
     WorldTime(url: 'Asia/Seoul', location: 'Seoul', flag: 'south_korea.png'),
     WorldTime(url: 'Asia/Jakarta', location: 'Jakarta', flag: 'indonesia.png'),
   ];
-
 
   @override
   void initState() {
@@ -55,23 +60,23 @@ class _ChooseLocationState extends State<ChooseLocation> {
         centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
-            color: Colors.grey[200]
-        ),
+        decoration: BoxDecoration(color: Colors.grey[200]),
         child: ListView.builder(
             itemCount: locations.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 1.0, horizontal: 4.0),
                 child: Card(
                   child: ListTile(
                       onTap: () {
+                        //printLocations();
                         goToLocation(index);
                       },
                       title: Text(locations[index].location),
                       leading: CircleAvatar(
                         backgroundImage:
-                        AssetImage('assets/${locations[index].flag}'),
+                            AssetImage('assets/${locations[index].flag}'),
                       )),
                 ),
               );
@@ -91,6 +96,4 @@ class _ChooseLocationState extends State<ChooseLocation> {
   plusCounter() {
     counter++;
   }
-
-
 }

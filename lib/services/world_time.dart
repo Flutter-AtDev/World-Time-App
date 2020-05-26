@@ -19,20 +19,31 @@ class WorldTime {
       Map data = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-      } else {}
+        print('Successfullly statusCode == 200');
+      } else {
+        print('Successfullly statusCode == 400');
+      }
       print(data['datetime']);
-      String offset = data['dst_offset'].toString().substring(1, 3);
-      print(offset);
+//      String offset = 'default';
+//      if (data['dst_offset'].toString().length > 3)
+//        offset = data['dst_offset'].toString().substring(1, 3);
+//      print(offset);
       DateTime now = DateTime.parse(data['datetime']);
-      print(now);
-      now = now.add(Duration(hours: int.parse(offset)));
-      print(now);
+//      print(now);
+//      now = now.add(Duration(hours: int.parse(offset)));
+//      print(now);
 
+      if (location != 'Cairo') {
+        now = now.add(Duration(hours: 5));
+      } else
+        now = now.add(Duration(hours: 2));
       time = DateFormat.jm().format(now);
       isDayTime = now.hour > 6 && now.hour < 20 ? true : false;
     } catch (e) {
-      print('error CAUGHT : $e');
+      //
+      print('MY error CAUGHT : $e');
       time = 'couldnt get Time';
+      isDayTime = false;
     }
   }
 }

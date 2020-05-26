@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:worldtimeapp/services/world_time.dart';
 import 'package:worldtimeapp/utils/Constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -7,10 +8,7 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-
-
 class _HomeState extends State<HomePage> {
-
   //Variables
   Map data = {};
 
@@ -46,14 +44,14 @@ class _HomeState extends State<HomePage> {
                     onPressed: () async {
                       dynamic result =
                           await Navigator.pushNamed(context, LOCATION);
+                      print('MsetState $result');
                       setState(() {
                         data = {
-                          LOCATION: result.location,
-                          TIME: result.time,
-                          FLAG: result.flag,
-                          isDAYTIME: result.isDayTime,
+                          LOCATION: result[LOCATION],
+                          TIME: result[TIME],
+                          FLAG: result[FLAG],
+                          isDAYTIME: result[isDAYTIME],
                         };
-                        print('setState $data');
                       });
                     },
                     icon: Icon(Icons.edit_location),
@@ -69,7 +67,11 @@ class _HomeState extends State<HomePage> {
                     data[LOCATION],
                     style: TextStyle(
                         fontSize: 28, letterSpacing: 2.0, color: Colors.white),
-                  )
+                  ),
+                  SizedBox(width: 10),
+                  CircleAvatar(
+                    backgroundImage: AssetImage('assets/${data[FLAG]}'),
+                  ),
                 ],
               ),
               SizedBox(height: 10),

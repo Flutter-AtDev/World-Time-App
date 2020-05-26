@@ -21,7 +21,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.blue[900],
+      backgroundColor: Colors.blue[900],
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
@@ -35,8 +35,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   void setUpWorldTime() async {
-    WorldTime worldTime = WorldTime(
-        location: 'Berlin', flag: 'germany.png', url: 'Europe/Berlin');
+    WorldTime worldTime = WorldTime(url: 'Africa/Cairo', location: 'Cairo', flag: 'egypt.png');
     await worldTime.getTime();
     //navigate Home Screen
     Navigator.pushReplacementNamed(context, Home, arguments: {
