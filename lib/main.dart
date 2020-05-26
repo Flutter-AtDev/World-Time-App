@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:worldtimeapp/pages/ChooseLocation.dart';
-import 'package:worldtimeapp/pages/Home.dart';
+import 'package:worldtimeapp/pages/HomePage.dart';
 import 'package:worldtimeapp/pages/LoadingScreen.dart';
 import 'package:worldtimeapp/utils/Constants.dart';
 
@@ -14,14 +14,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoadingScreen(),
-        '/home': (context) => Home(),
+        Home: (context) => HomePage(),
         LOCATION: (context) => ChooseLocation(),
       },
     );
